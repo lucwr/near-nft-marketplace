@@ -72,7 +72,7 @@ impl Contract {
             buyer_id,
             price
           )
-      )
+      );
   }
 
   #[private]
@@ -84,7 +84,7 @@ impl Contract {
           if payout_object.payout.len() > 10 || payout_object.payout.is_empty() {
             env::log_str("Cannot have more than 10 royalties");
             None
-          } esle {
+          } else {
             let mut remainder = price.0;
             for &value in payout_object.payout.values() {
               remainder = remainder.checked_sub(value.0)?;
@@ -102,7 +102,7 @@ impl Contract {
     } else {
       Promise::new(buyer_id).transfer(u128::from(price));
       return price;
-    }
+    };
 
     for (receiver_id, amount) in payout {
       Promise::new(receiver_id).transfer(amount.0);
